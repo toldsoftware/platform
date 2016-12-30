@@ -14,7 +14,7 @@ Platform dependency injection
 
 ## Usage
 
-- npm install @told/platform
+- npm install @told/platform --save
 
 - In Typescript File:
 
