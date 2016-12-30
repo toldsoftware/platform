@@ -21,13 +21,13 @@ Steps to setup a new project using this boilerplate.
 
 Note: You might want to make a copy of this file if needed
 
-- X Create Empty Github Project
-- X Copy this repo into directory (except .git)
-- X Rename Notes/HoursNAME.md and start tracking time
-- X Replace README and package.json with BOILERPLATE versions
-- X Find/Replace MODULE_NAME and MODULE_TITLE
+- x Create Empty Github Project
+- x Copy this repo into directory (except .git)
+- x Rename Notes/HoursNAME.md and start tracking time
+- x Replace README and package.json with BOILERPLATE versions
+- x Find/Replace MODULE_NAME and MODULE_TITLE
 - x npm install
-- Commit and Push Project to Github
+- x Commit and Push Project to Github
 - Create *Coveralls* Project for repo: https://coveralls.io
     - Add Repo
     - Sync repos (At bottom)
