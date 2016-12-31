@@ -9,9 +9,10 @@
 - Define Promise for Async
 - Test Async
 
-##
+## 17:02-19:40
 
 - Define Http
+- Test Http
 
 
 # Tasks

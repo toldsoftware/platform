@@ -82,14 +82,19 @@ describe("browserPlatformProvider", () => {
 
         let httpClient = Platform.http();
 
-        // it("should fail if bad url", (done) => {
-        //     httpClient.request("bad url").then(fail).catch(done);
-        // }, 50);
+        it("should fail if bad url", (done) => {
+            httpClient.request("bad url").then(fail).catch(done);
+        }, 50);
 
-        it("should get image with CORS", (done) => {
-            // http://localhost:9876
-            // httpClient.request("http://localhost:9876").then(done).catch(fail);
-            // httpClient.request("http://www.timeapi.org/utc/now").then(done).catch(fail);
+        it("should get from own domain", (done) => {
+            httpClient.request("/").then(done).catch(fail);
+        }, 50);
+
+        it("should fail without CORS", (done) => {
+            httpClient.request("http://www.timeapi.org/utc/now").then(fail).catch(done);
+        }, 3000);
+
+        it("should get response with CORS", (done) => {
             httpClient.request("https://po-cdn-app.azureedge.net/Links/BlobImageProxy/profileoverlayblob?url=%2Fportal-images%2FcXFK2ejVck6hrYyEq4jCXg.png").then(done).catch(fail);
         }, 3000);
     });
