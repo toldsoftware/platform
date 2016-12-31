@@ -146,19 +146,19 @@ export class Ajax {
         let method = settings.type || "GET";
 
         xhr.open(method, url, true);
-        xhr.withCredentials = true;
+        // xhr.withCredentials = true;
 
         xhr.onerror = function (ev) {
             settings.error(xhr, "" + xhr.status, "" + ev);
         };
 
         xhr.onreadystatechange = function () {
-            console.log("xhr.onreadystatechange",
-                "settings.url", settings.url,
-                "xhr.readyState", xhr.readyState,
-                "xhr.status", xhr.status,
-                "xhr.responseText", xhr.responseText,
-            );
+            // console.log("xhr.onreadystatechange",
+            //     "settings.url", settings.url,
+            //     "xhr.readyState", xhr.readyState,
+            //     "xhr.status", xhr.status,
+            //     "xhr.responseText", xhr.responseText.substr(0, 20),
+            // );
 
             if (xhr.readyState === 4) {
                 hasCompleted = true;

@@ -86,7 +86,7 @@ describe("browserPlatformProvider", () => {
         //     httpClient.request("bad url").then(fail).catch(done);
         // }, 50);
 
-        it("should get website", (done) => {
+        it("should get image with CORS", (done) => {
             // http://localhost:9876
             // httpClient.request("http://localhost:9876").then(done).catch(fail);
             // httpClient.request("http://www.timeapi.org/utc/now").then(done).catch(fail);
