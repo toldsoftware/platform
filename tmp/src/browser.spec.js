@@ -51,36 +51,46 @@ describe("setupBrowser", function () {
         browser_1.setupBrowser();
         expect(Promise).not.toBeFalsy();
     });
+    it("should fail async without setup", function (done) {
+        try {
+            testAsync();
+            fail();
+        }
+        catch (err) {
+            done();
+        }
+    }, 50);
     it("should allow async", function (done) {
-        var result = dramaticWelcome();
+        browser_1.setupBrowser();
+        var result = testAsync();
         result.then(function (x) {
-            expect(x).toBe("Hello World");
+            expect(x).toBe("The End");
             done();
         });
-    });
+    }, 50);
+    it("should catch async exception", function (done) {
+        browser_1.setupBrowser();
+        var result = testAsyncThrow();
+        result.then(function (x) {
+            fail();
+        }).catch(function (err) {
+            expect(err).toBe("Async Test Error");
+            done();
+        });
+    }, 50);
 });
 var text = "";
-function dramaticWelcome() {
+function testAsync() {
     return __awaiter(this, void 0, void 0, function () {
-        var text, i;
+        var text;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    text = "Hello";
-                    i = 0;
-                    _a.label = 1;
-                case 1:
-                    if (!(i < 3))
-                        return [3 /*break*/, 4];
+                    text = "The";
                     return [4 /*yield*/, delay(1)];
-                case 2:
+                case 1:
                     _a.sent();
-                    _a.label = 3;
-                case 3:
-                    i++;
-                    return [3 /*break*/, 1];
-                case 4:
-                    text += " World";
+                    text += " End";
                     return [2 /*return*/, text];
             }
         });
@@ -95,9 +105,28 @@ function delay(milliseconds) {
         });
     });
 }
+function testAsyncThrow() {
+    return __awaiter(this, void 0, void 0, function () {
+        var text;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    text = "The";
+                    return [4 /*yield*/, delay(1)];
+                case 1:
+                    _a.sent();
+                    throw "Async Test Error";
+            }
+        });
+    });
+}
 describe("browserPlatformProvider", function () {
     browser_1.setupBrowser();
-    it("should be done", function () {
+    describe("httpClient", function () {
+        var httpClient = platform_1.Platform.http();
+        it("should fail if bad url", function (done) {
+            httpClient.request("bad url").then(fail).catch(done);
+        });
     });
 });
 //# sourceMappingURL=browser.spec.js.map

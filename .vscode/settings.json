@@ -9,7 +9,7 @@
         ".gitignore": true,
         ".travis.yml": true,
         "index.ts": true,
-        // "karma.conf.js": true,
+        "karma.conf.js": true,
         "LICENSE": true,
         // "tsconfig.json": true,
         "tslint.json": true
