@@ -22,6 +22,7 @@ class BrowserHttpClient implements P.HttpClient {
             new Ajax().ajax({
                 url: url,
                 type: method,
+                data: data,
                 beforeSend: xhr => {
                     if (headers != null) {
                         for (let k in headers) {
