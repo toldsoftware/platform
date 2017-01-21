@@ -14,5 +14,5 @@ export interface HttpClientResponse {
     headers: HttpHeaders;
 }
 export interface HttpClient {
-    request(url: string, method?: HttpMethod, data?: any, headers?: HttpHeaders): Promise<HttpClientResponse>;
+    request(url: string, method?: HttpMethod, data?: any, headers?: HttpHeaders, withCredentials?: boolean): Promise<HttpClientResponse>;
 }

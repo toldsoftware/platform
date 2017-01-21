@@ -13,6 +13,7 @@ export interface AjaxSettings {
     success?(data: string, textStatus: string, xhr: XHR): void;
     error?(xhr: XHR, textStatus: string, errorThrown: string): void;
     complete?(): void;
+    withCredentials?: boolean;
 }
 export declare class Ajax {
     constructor();

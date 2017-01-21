@@ -17,6 +17,7 @@ export interface AjaxSettings {
     success?(data: string, textStatus: string, xhr: XHR): void;
     error?(xhr: XHR, textStatus: string, errorThrown: string): void;
     complete?(): void;
+    withCredentials?: boolean;
 }
 
 declare var ActiveXObject: any;
@@ -146,7 +147,7 @@ export class Ajax {
         let method = settings.type || "GET";
 
         xhr.open(method, url, true);
-        // xhr.withCredentials = true;
+        xhr.withCredentials = settings.withCredentials || false;
 
         xhr.onerror = function (ev) {
             settings.error(xhr, "" + xhr.status, "" + ev);

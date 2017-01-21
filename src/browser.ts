@@ -15,7 +15,7 @@ class BrowserPlatformProvider implements P.PlatformProvider {
 }
 
 class BrowserHttpClient implements P.HttpClient {
-    async request(url: string, method?: P.HttpMethod, data?: string, headers?: P.HttpHeaders): Promise<P.HttpClientResponse> {
+    async request(url: string, method?: P.HttpMethod, data?: string, headers?: P.HttpHeaders, withCredentials = false): Promise<P.HttpClientResponse> {
         return new Promise<P.HttpClientResponse>((resolve, reject) => {
             method = method || "GET";
 
@@ -23,6 +23,7 @@ class BrowserHttpClient implements P.HttpClient {
                 url: url,
                 type: method,
                 data: data,
+                withCredentials: withCredentials,
                 beforeSend: xhr => {
                     if (headers != null) {
                         for (let k in headers) {
