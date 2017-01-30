@@ -74,39 +74,39 @@ export class Ajax {
             url: url, // + (query.length ? '?' + query.join('&') : ''),
             type: "GET",
             success: onSuccess,
-            error: (xhr, errorStatus, information) => onFail(errorStatus + ":" + information)
+            error: (xhr, errorStatus, information) => onFail(errorStatus + ':' + information)
         });
     };
 
     post(url: string, data: { [key: string]: string }, onSuccess: (response: string) => void, onFail: (error: string) => void) {
         let query: string[] = [];
         for (let key in data) {
-            query.push(encodeURIComponent(key) + "=" + encodeURIComponent(data[key]));
+            query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
         }
-        let dataString = query.join("&");
+        let dataString = query.join('&');
         // this.send(url, callback, 'POST', query.join('&'));
         this.ajax({
             url: url,
             data: dataString,
-            type: "POST",
-            contentType: "application/x-www-form-urlencoded",
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded',
             success: onSuccess,
-            error: (xhr, errorStatus, information) => onFail(errorStatus + ":" + information)
+            error: (xhr, errorStatus, information) => onFail(errorStatus + ':' + information)
         });
     };
 
     jsonp(url: string, data: { [key: string]: string }, onSuccess: () => void, onFail: () => void) {
         let query: string[] = [];
         for (let key in data) {
-            query.push(encodeURIComponent(key) + "=" + encodeURIComponent(data[key]));
+            query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
         }
-        let dataString = query.join("&");
+        let dataString = query.join('&');
         // this.send(url, callback, 'POST', query.join('&'));
         let src = url
-            + (url.indexOf("?") > 0 ? "&" : "?")
+            + (url.indexOf('?') > 0 ? '&' : '?')
             + dataString;
 
-        let script = document.createElement("script");
+        let script = document.createElement('script');
         script.src = src;
         script.onload = () => onSuccess();
         script.onerror = () => onFail();
@@ -125,8 +125,8 @@ export class Ajax {
         // settings.type
         // settings.url
 
-        if (settings.dataType != null && settings.dataType !== "text") {
-            throw "Ajax Library does not process data - set to null or text";
+        if (settings.dataType != null && settings.dataType !== 'text') {
+            throw 'Ajax Library does not process data - set to null or text';
         }
 
         settings.success = settings.success || (() => { });
@@ -139,18 +139,18 @@ export class Ajax {
         let hasCompleted = false;
         setTimeout(() => {
             if (!hasCompleted) {
-                settings.error(xhr, "Timed Out", "");
+                settings.error(xhr, 'Timed Out', '');
             }
         }, 30 * 1000);
 
         let url = settings.url;
-        let method = settings.type || "GET";
+        let method = settings.type || 'GET';
 
         xhr.open(method, url, true);
         xhr.withCredentials = settings.withCredentials || false;
 
         xhr.onerror = function (ev) {
-            settings.error(xhr, "" + xhr.status, "" + ev);
+            settings.error(xhr, '' + xhr.status, '' + ev);
         };
 
         xhr.onreadystatechange = function () {
@@ -166,16 +166,16 @@ export class Ajax {
 
                 if (xhr.status >= 200 && xhr.status < 300) {
                     try {
-                        settings.success(xhr.responseText, "" + xhr.status, xhr);
-                    } catch (err) { console.log("ERROR in success handler", err); }
+                        settings.success(xhr.responseText, '' + xhr.status, xhr);
+                    } catch (err) { console.log('ERROR in success handler', err); }
                 } else {
                     try {
-                        settings.error(xhr, "" + xhr.status, "");
-                    } catch (err) { console.log("ERROR in error handler", err); }
+                        settings.error(xhr, '' + xhr.status, '');
+                    } catch (err) { console.log('ERROR in error handler', err); }
                 }
                 try {
                     settings.complete();
-                } catch (err) { console.log("ERROR in complete handler", err); }
+                } catch (err) { console.log('ERROR in complete handler', err); }
             }
         };
 
@@ -184,7 +184,7 @@ export class Ajax {
         // }
 
         if (settings.contentType != null) {
-            xhr.setRequestHeader("Content-type", settings.contentType);
+            xhr.setRequestHeader('Content-type', settings.contentType);
         }
 
         settings.beforeSend(xhr);
