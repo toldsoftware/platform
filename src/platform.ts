@@ -5,9 +5,10 @@ export interface PlatformProvider {
 export abstract class Platform {
     static provider: PlatformProvider;
     static http() { return Platform.provider.http(); }
+    static urlResolver = (url: string) => url;
 }
 
-export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "HEAD";
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD';
 export type HttpHeaders = { [key: string]: string };
 
 export interface HttpClientResponse {
@@ -17,4 +18,5 @@ export interface HttpClientResponse {
 
 export interface HttpClient {
     request(url: string, method?: HttpMethod, data?: any, headers?: HttpHeaders, withCredentials?: boolean): Promise<HttpClientResponse>;
+    resolveUrl(url: string): string;
 }

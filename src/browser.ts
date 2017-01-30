@@ -1,11 +1,11 @@
-import * as P from "./platform";
-import { Ajax, AjaxSettings } from "./browser-ajax";
+import * as P from './platform';
+import { Ajax, AjaxSettings } from './browser-ajax';
 
 declare var require: any;
 
 export function setupBrowser() {
     P.Platform.provider = new BrowserPlatformProvider();
-    Promise = require("es6-promise").Promise;
+    Promise = require('es6-promise').Promise;
 }
 
 class BrowserPlatformProvider implements P.PlatformProvider {
@@ -15,12 +15,16 @@ class BrowserPlatformProvider implements P.PlatformProvider {
 }
 
 class BrowserHttpClient implements P.HttpClient {
-    async request(url: string, method?: P.HttpMethod, data?: string, headers?: P.HttpHeaders, withCredentials = false): Promise<P.HttpClientResponse> {
+    async request(url: string, method?: P.HttpMethod, data?: any, headers?: P.HttpHeaders, withCredentials = false): Promise<P.HttpClientResponse> {
         return new Promise<P.HttpClientResponse>((resolve, reject) => {
-            method = method || "GET";
+            method = method || 'GET';
+
+            if (typeof data === 'object' && data.constructor === Object) {
+                data = JSON.stringify(data);
+            }
 
             new Ajax().ajax({
-                url: url,
+                url: this.resolveUrl(url),
                 type: method,
                 data: data,
                 withCredentials: withCredentials,
@@ -33,7 +37,7 @@ class BrowserHttpClient implements P.HttpClient {
                     }
                 },
                 success: (data, textStatus, response) => {
-                    let headersList = response.getAllResponseHeaders().split("\n").map(x => x.trim().split("="));
+                    let headersList = response.getAllResponseHeaders().split('\n').map(x => x.trim().split('='));
                     let headers: P.HttpHeaders = {};
                     headersList.forEach(x => headers[x[0]] = x[1]);
                     resolve({ data: data, headers: headers });
@@ -42,4 +46,6 @@ class BrowserHttpClient implements P.HttpClient {
             });
         });
     }
+
+    resolveUrl(url: string) { return P.Platform.urlResolver(url); }
 }
