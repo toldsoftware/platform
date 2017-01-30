@@ -15,8 +15,8 @@ class BrowserPlatformProvider implements P.PlatformProvider {
 }
 
 class BrowserHttpClient implements P.HttpClient {
-    async request(url: string, method?: P.HttpMethod, data?: any, headers?: P.HttpHeaders, withCredentials = false): Promise<P.HttpClientResponse> {
-        return new Promise<P.HttpClientResponse>((resolve, reject) => {
+    async request<T>(url: string, method?: P.HttpMethod, data?: any, headers?: P.HttpHeaders, withCredentials = false): Promise<P.HttpClientResponse<T>> {
+        return new Promise<P.HttpClientResponse<T>>((resolve, reject) => {
             method = method || 'GET';
 
             if (typeof data === 'object' && data.constructor === Object) {
@@ -40,7 +40,16 @@ class BrowserHttpClient implements P.HttpClient {
                     let headersList = response.getAllResponseHeaders().split('\n').map(x => x.trim().split('='));
                     let headers: P.HttpHeaders = {};
                     headersList.forEach(x => headers[x[0]] = x[1]);
-                    resolve({ data: data, headers: headers });
+
+                    let dataObj = null;
+
+                    try {
+                        dataObj = JSON.parse(data) as T;
+                    } catch (err) {
+
+                    }
+
+                    resolve({ dataRaw: data, data: dataObj, headers: headers });
                 },
                 error: err => reject(err)
             });
